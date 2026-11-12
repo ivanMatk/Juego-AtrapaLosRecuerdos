@@ -1,0 +1,15 @@
+IMÁGENES DEL JUEGO - poné los archivos en ESTA carpeta con estos nombres exactos:
+
+  museo.jfif            -> El Museo
+  sbnMartin.jfifa       -> La Plaza San Martín (también acepta sbnMartin.jfif, sanMartin.jpg, plaza.jpg...)
+  balneario.jfif        -> El Balneario
+  hospital.jpg          -> El Hospital
+  bonaerense.png        -> La Bandera Bonaerense
+  elisa.jfif            -> El Palacio de La Elisa
+  cine.jfif             -> El Cine Ítalo Argentino
+  municipalidad.jfif    -> La Municipalidad
+  sarmiento.jfif        -> Fondo de la pantalla de inicio (solo antes de empezar a jugar)
+
+Extensiones aceptadas: .jfif .jpg .jpeg .png .webp (y .jfifa, por si quedó así el nombre).
+Si falta alguna imagen, el juego usa el dibujo de ese lugar (y para "cine", una foto de la web del cine si hay internet).
+Si no está sarmiento.jfif, se ve el fondo normal del juego.

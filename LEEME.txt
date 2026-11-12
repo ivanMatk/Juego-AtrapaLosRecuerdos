@@ -1,0 +1,40 @@
+ATRAPÁ LOS RECUERDOS - Capitán Sarmiento (v11)
+=============================================
+
+CÓMO ABRIRLO
+- Abrí la carpeta en Visual Studio Code y usá "Live Server" sobre index.html (o abrí index.html con doble clic).
+
+CÓMO SE JUEGA
+- Caen cosas del cielo. Tocá los 8 lugares del pueblo y esquivá lo que no es de acá.
+- 3 vidas, 60 segundos. Al tocar un lugar por primera vez aparece su imagen grande con su historia.
+- Al final se arma el álbum de recuerdos (se puede tocar cada uno para releer la historia).
+- Pausa: botón ❚❚ o tecla P / Esc. Se pausa sola si cambiás de pestaña. Desde la pausa: seguir, empezar de nuevo o salir al inicio.
+- Distractores "parecidos": Obelisco, Casa Rosada, Cataratas, Glaciar Perito Moreno y Torre Eiffel. Al tocarlos, el cartel dice dónde están de verdad.
+- Letra en negrita y de sistema (se lee bien en cualquier equipo). Las cosas caen más lento.
+- Audio: música y efectos con volumen alto y limitador; se activa con el primer toque. Si el navegador lo bloquea, el juego avisa en pantalla.
+- En iPhone, el modo silencio (interruptor lateral) apaga el sonido: hay que desactivarlo y subir el volumen.
+
+LAS IMÁGENES (carpeta "imagenes", nombres exactos; el detalle está en imagenes/LEEME.txt)
+  museo.jfif, sbnMartin.jfifa, balneario.jfif, hospital.jpg, bonaerense.png, elisa.jfif, cine.jfif, municipalidad.jfif
+  sarmiento.jfif = fondo de la pantalla de inicio (solo antes de empezar; al jugar vuelve el fondo normal).
+Cuando hay foto, se usa en la ventana de historia, en el álbum y dentro de las fichas redondas que caen.
+Si falta una imagen, se ve el dibujo de ese lugar con el cartel "Imagen pendiente".
+CINE: si no hay cine.jfif (u otra extensión), el juego carga una foto de la web oficial del cine (necesita internet).
+Fotos de esa web: /assets/exterior1.jpg, /assets/fachada.jpg, /assets/interior.jpg y /documentos/fachada_antigua.jpg (conviene pedir permiso al cine).
+
+COLORES (en estilos.css, bloque :root, y en juego.js, función buildBackground)
+  Beige #F2E4C9 - Bordó #8C1D2F (oscuro #5E1220, claro #B8404F) - Azul Francia #0055A4 - Mostaza #F2B01E
+
+DATOS CONFIRMADOS (con fuente)
+- Museo: la estación se habilitó en 1882 y dejó de funcionar en 1992; el edificio se restauró y reinauguró en octubre de 2005.
+- Hospital: Casa de los Enfermos San Carlos, fundada el 23/03/1915; fundado por la Conferencia de Señoras de la Sociedad San Vicente de Paul; Ley 14.416 (2012) lo pasó al municipio; hoy "San Carlos de Borromeo".
+- Bandera bonaerense: escrutinio el 12/08/1997; jura en Luján el 28/09/1997; escuelas de educación media N.º 1 "Mateo Jelicich" y N.º 2 "Domingo Faustino Sarmiento"; Decreto 2979/97, Ley 11.997 y Ley 14.290.
+- Municipalidad: Froilán Rodríguez, primer delegado (1898 a 1915); partido autónomo en 1961; capilla del Pilar inaugurada en 1900.
+- Cine Ítalo Argentino (web oficial del cine): Sociedad Italiana "Roma Intangibile" fundada el 20/09/1889 por Pedro Diale y 15 compatriotas; teatro inaugurado el 03/04/1929; 500 butacas.
+
+DATOS A CONFIRMAR (con el Museo y Archivo Histórico Municipal o la web del cine)
+- Plaza San Martín: año exacto de construcción (el texto dice "primera mitad del siglo XX"). Ojo: las fuentes dicen que la primera plaza del pueblo (1898) fue frente a la iglesia San Carlos Borromeo.
+- Hospital: el año exacto del nuevo edificio (el texto dice "hacia fines de la década de 1930").
+- Palacio / Estancia La Elisa: no se encontró historia documentada (fundador, año, arquitecto). El texto es genérico.
+
+TEXTOS: están en juego.js, arreglo GOOD (campos story y source).

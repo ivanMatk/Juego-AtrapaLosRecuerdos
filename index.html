@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Juego de reflejos: atrapá los recuerdos de Capitán Sarmiento, provincia de Buenos Aires.">
+  <title>Atrapá los recuerdos · Capitán Sarmiento</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Inicio">
+      <span class="brand-mark">CS</span>
+      <span><strong>CRÓNICAS</strong><small>CAPITÁN SARMIENTO</small></span>
+    </a>
+    <div class="sound-buttons">
+      <button id="musicToggle" class="icon-button" aria-label="Activar o desactivar la música"><span id="musicIcon" aria-hidden="true">🎵</span> <span id="musicLabel">Música</span></button>
+      <button id="sfxToggle" class="icon-button" aria-label="Activar o desactivar los efectos de sonido"><span id="sfxIcon" aria-hidden="true">🔔</span> <span id="sfxLabel">Efectos</span></button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <canvas id="canvas" aria-label="Zona de juego: tocá los recuerdos que caen"></canvas>
+
+    <div id="hud" class="hud hidden">
+      <div class="hud-block"><span>PUNTOS</span><strong id="score">0</strong></div>
+      <div class="hud-center"><div class="time-track"><div id="timeBar"></div></div><span id="timeText">60s</span></div>
+      <div class="hud-block right"><span>VIDAS</span><strong id="lives" aria-live="polite"></strong></div>
+      <div class="hud-block mem"><span>RECUERDOS</span><strong id="memCount">0/8</strong></div>
+      <button id="pauseButton" class="pause-btn" aria-label="Pausa" title="Pausa (P)">❚❚</button>
+    </div>
+    <div id="comboBadge" class="combo hidden">COMBO ×2</div>
+    <div id="factToast" class="fact-toast" role="status" aria-live="polite"></div>
+    <div id="countdown" class="countdown hidden"></div>
+
+    <section id="startScreen" class="overlay">
+      <div class="card start-card">
+        <div class="eyebrow"><span class="pulse-dot"></span> JUEGO DE REFLEJOS</div>
+        <h1>Atrapá los<br><span>recuerdos</span></h1>
+        <p class="lead">Caen cosas del cielo. Tocá los lugares de <strong>Capitán Sarmiento</strong> para descubrir su historia y esquivá lo que no es de acá.</p>
+        <div class="legend">
+          <div class="legend-col good"><span class="legend-title">✓ TOCÁ</span><div id="goodSamples" class="samples"></div></div>
+          <div class="legend-col bad"><span class="legend-title">✕ ESQUIVÁ</span><div id="badSamples" class="samples"></div></div>
+        </div>
+        <label class="name-label" for="playerName">¿Cómo te llamás?</label>
+        <input id="playerName" maxlength="18" placeholder="Escribí tu nombre" autocomplete="nickname">
+        <button id="startButton" class="primary-button">¡Jugar! <span>→</span></button>
+        <div class="feature-row"><span>♥ 3 vidas</span><span>◷ 60 segundos</span><span>✦ 8 recuerdos para descubrir</span></div>
+      </div>
+    </section>
+
+    <section id="endScreen" class="overlay hidden">
+      <div class="card end-card">
+        <div class="result-icon" aria-hidden="true">🏆</div>
+        <div class="eyebrow center">FIN DE LA PARTIDA</div>
+        <h2 id="endTitle">¡Buen comienzo!</h2>
+        <p id="endMessage" class="lead small"></p>
+        <div class="final-score"><span>PUNTAJE FINAL</span><strong id="finalScore">0</strong><small id="newRecord"></small></div>
+        <div class="result-stats">
+          <div><strong id="statCaught">0</strong><span>ATRAPADOS</span></div>
+          <div><strong id="statCombo">0</strong><span>MEJOR COMBO</span></div>
+          <div><strong id="statAlbum">0/8</strong><span>RECUERDOS</span></div>
+        </div>
+        <div class="collection-heading"><h3>Tu álbum de recuerdos</h3><span id="albumHint">Tocá uno para leer su historia</span></div>
+        <div id="album" class="album"></div>
+        <div class="collection-heading"><h3>🏅 Récords de este navegador</h3><span>TOP 5</span></div>
+        <ol id="leaderboard"></ol>
+        <button id="againButton" class="primary-button">Jugar otra vez <span>↻</span></button>
+        <p class="fine-print">Los récords se guardan en este navegador. Los dibujos son ilustraciones simbólicas.</p>
+      </div>
+    </section>
+
+    <section id="pauseOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+      <div class="card pause-card">
+        <div class="eyebrow center">JUEGO EN PAUSA</div>
+        <h2 id="pauseTitle">Tomate un respiro</h2>
+        <button id="resumeButton" class="primary-button">Seguir jugando <span>▶</span></button>
+        <button id="restartButton" class="secondary-button" type="button">↻ Empezar de nuevo</button>
+        <button id="quitButton" class="secondary-button" type="button">Salir al inicio</button>
+        <p class="fine-print">Tip: con la tecla P o Esc también podés pausar.</p>
+      </div>
+    </section>
+
+    <section id="sourcesOverlay" class="overlay sources-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="sourcesTitle">
+      <div class="card sources-card">
+        <button id="sourcesClose" class="close-button" aria-label="Cerrar">×</button>
+        <div class="eyebrow">FUENTES Y CRÉDITOS</div>
+        <h2 id="sourcesTitle">De dónde sale cada historia</h2>
+        <div id="sourcesList" class="src-list"></div>
+        <h3>Fuentes consultadas</h3>
+        <ul id="generalSources" class="src-links"></ul>
+        <h3>Créditos</h3>
+        <p class="credits">Proyecto educativo creado por Iván M. Kearney. Los datos históricos provienen de las fuentes listadas; algunas fechas pueden precisarse con el Museo y Archivo Histórico Municipal. Los dibujos son ilustraciones simbólicas hechas para este proyecto y las fotografías pertenecen a quienes las tomaron. Todos los derechos reservados.</p>
+      </div>
+    </section>
+
+    <section id="storyOverlay" class="overlay story-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="storyName">
+      <article class="story-card">
+        <button id="storyClose" class="close-button" aria-label="Cerrar">×</button>
+        <div id="storyImgBox" class="story-img"><img id="storyImg" alt=""></div>
+        <div class="story-body">
+          <div id="storyKicker" class="story-kicker">✦ ¡NUEVO RECUERDO DESBLOQUEADO!</div>
+          <h2 id="storyName">Un lugar del pueblo</h2>
+          <p id="storyText"></p>
+          <div class="source-note"><strong>PARA SEGUIR INVESTIGANDO</strong><span id="storySource"></span></div>
+          <button id="storyContinue" class="primary-button">¡Seguir jugando! <span>→</span></button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer><span>Proyecto educativo - Creado por Iván M. Kearney - Todos los derechos reservados.</span></footer>
+  <script src="juego.js"></script>
+</body>
+</html>
